@@ -15,13 +15,14 @@ pathList = []
 
             
 def startBFSandReturnPathList(IM, r, c, brkPts, size):
-    for i in range(r):
-        for j in range(c):
-            diction[getNodeNumber(r, c, i, j)] = [i, j, -1, -1]
     
     for i in range(1, size):
-        bfs(IM, getNodeNumber(r, c, (brkPts[i - 1] + brkPts[i]) / 2 , 0), brkPts[i - 1], brkPts[i], r, c)
-        pathList.append(getPath(getNodeNumber(r, c, (brkPts[i - 1] + brkPts[i]) / 2 , c - 1)))
+        diction.clear()
+        for j in range(r):
+            for k in range(c):
+                diction[getNodeNumber(r, c, j, k)] = [j, k, -1, -1]
+        bfs(IM, getNodeNumber(r, c, int((brkPts[i - 1] + brkPts[i]) / 2) , 0), brkPts[i - 1], brkPts[i], r, c)
+        pathList.append(getPath(getNodeNumber(r, c, int((brkPts[i - 1] + brkPts[i]) / 2) , c - 1)))
     
     
 def LineSeg(IM, r, c, brkPts, size):
@@ -31,10 +32,10 @@ def LineSeg(IM, r, c, brkPts, size):
     for i in range(1,size-1):
         #above
         currPath = pathList[i]
-        for j in currPath:
+        '''for j in currPath[:-2]:
             x = diction[j][0]
             y = diction[j][1]
-            print(IM[x][y])
+        ''' 
         prevPath = pathList[i-1]
         mini = prevPath[len(prevPath) - 2]
         maxi = currPath[len(currPath) - 1]
@@ -70,7 +71,7 @@ def LineSeg(IM, r, c, brkPts, size):
 def bfs(IM, start, x1, x2, r, c):
     x = diction[start][0]
     y = diction[start][1]
-    diction[start][2] = -1;
+    diction[start][2] = -2;
     diction[start][3] = 1;
     vertQueue = Queue()
     vertQueue.enqueue(start)
@@ -78,6 +79,9 @@ def bfs(IM, start, x1, x2, r, c):
         current = vertQueue.dequeue()
         x = diction[current][0]
         y = diction[current][1]
+        if current == getNodeNumber(r,c,int((x1+x2)/2),c-1):
+            print("Reached")
+            break
         
         #right node
         if x + 1 <= x2 and IM[x + 1][y] == 255:
@@ -113,20 +117,21 @@ def bfs(IM, start, x1, x2, r, c):
 
 def getPath(NodeNumber):
     path = []
-    minP = 1000000
-    maxP = -1
-    while not diction[NodeNumber][2] == -1:
+    minP = math.inf
+    maxP = -10
+    while not diction[NodeNumber][2] == -2:
         x = diction[NodeNumber][0]
-        if minP > x:
+        if minP >= x:
             minP = x
-        if maxP < x:
+        if maxP <= x:
             maxP = x
         path.append(NodeNumber)
+        print(NodeNumber)
         NodeNumber = diction[NodeNumber][2]
     x = diction[NodeNumber][0]
-    if minP > x:
+    if minP >= x:
         minP = x
-    if maxP < x:
+    if maxP <= x:
         maxP = x
     path.append(NodeNumber)
     path.append(minP)
