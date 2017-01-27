@@ -14,7 +14,7 @@ def showImg(th2):
     cv2.waitKey(0)  
     cv2.destroyAllWindows()
     
-img = cv2.imread('D:/Study/ML/OCR/h3.jpg',0)
+img = cv2.imread('D:/Study/ML/OCR/hh2.jpg',0)
 cv2.namedWindow('image', cv2.WINDOW_NORMAL)
 ret2,th2 = cv2.threshold(img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 r = th2.shape[0]
@@ -35,4 +35,4 @@ plt.show()
 brkpts = [11,30,50,70,90,109,129,150,168,188,208,226]
 brkpts2 = [115,357,532,677,834,1022,1221,1385,1590,1827,2056,2219,2389,2570,2782]
 brkpts3 = [105,285,446,671]
-LineSeg(th2,r,c,brkpts,12)
+LineSeg(th2,r,c,brkpts2,15)

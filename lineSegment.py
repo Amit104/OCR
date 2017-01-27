@@ -6,6 +6,7 @@ Created on Sat Jan 21 19:17:25 2017
 """
 
 from initialisations import *
+from wordsegment import *
 
 def getNodeNumber(r, c, x, y):
     return int((x * c) + y + 1)
@@ -62,10 +63,12 @@ def LineSeg(IM, r, c, brkPts, size):
                     imag[j][k]=IM[j+mini][k] 
            
         imag = np.array(imag,dtype=np.uint8)
-        
+        '''
         cv2.imshow('image',imag)
         cv2.waitKey(0)  
-        cv2.destroyAllWindows()
+        cv2.destroyAllWindows()'''
+        
+        wordSeg(imag)
     #last row
 
 def bfs(IM, start, x1, x2, r, c):
@@ -79,9 +82,6 @@ def bfs(IM, start, x1, x2, r, c):
         current = vertQueue.dequeue()
         x = diction[current][0]
         y = diction[current][1]
-        if current == getNodeNumber(r,c,int((x1+x2)/2),c-1):
-            print("Reached")
-            break
         
         #right node
         if x + 1 <= x2 and IM[x + 1][y] == 255:
@@ -126,7 +126,6 @@ def getPath(NodeNumber):
         if maxP <= x:
             maxP = x
         path.append(NodeNumber)
-        print(NodeNumber)
         NodeNumber = diction[NodeNumber][2]
     x = diction[NodeNumber][0]
     if minP >= x:
