@@ -24,7 +24,8 @@ def wordSeg(IM):
             col=i
         
         elif colsum!=0 and flag==1:
-            a.append(int((i+col)/2))
+            if i-col>3:
+                a.append(int((i+col)/2))
             flag=0
     a.append(c-1)
             
@@ -43,11 +44,4 @@ def wordSeg(IM):
                 #wordSeg(imag)
         cv2.imshow('image',imag)
         cv2.waitKey(0)  
-        cv2.destroyAllWindows()
-                   
-            
-           
-            
-        
-        
-            
+        cv2.destroyAllWindows()   

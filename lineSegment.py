@@ -28,8 +28,36 @@ def startBFSandReturnPathList(IM, r, c, brkPts, size):
     
 def LineSeg(IM, r, c, brkPts, size):
     startBFSandReturnPathList(IM, r, c, brkPts, size)
-    #first row
     
+    #first row
+    currPath = pathList[0]
+    mini = 0
+    maxi = currPath[len(currPath) - 1]
+    
+    imag = []  
+    for j in range(maxi-mini+1):                               
+        il = []         
+        for k in range (c):            
+            il.append(0)      
+        imag.append(il) 
+            
+    for j in currPath[:-2]:
+        for k in range(diction[j][0],maxi+1):
+            imag[k-mini][diction[j][1]] = 255
+            
+    for j in range (maxi-mini+1):                                
+        for k in range (c):     
+            if imag[j][k]==0:
+                imag[j][k]=IM[j+mini][k] 
+                
+    imag = np.array(imag,dtype=np.uint8)
+    cv2.imshow('image',imag)
+    cv2.waitKey(0)  
+    cv2.destroyAllWindows()
+    
+    wordSeg(imag)
+    
+    #other lines
     for i in range(1,size-1):
         #above
         currPath = pathList[i]
@@ -63,13 +91,40 @@ def LineSeg(IM, r, c, brkPts, size):
                     imag[j][k]=IM[j+mini][k] 
            
         imag = np.array(imag,dtype=np.uint8)
-        '''
         cv2.imshow('image',imag)
         cv2.waitKey(0)  
-        cv2.destroyAllWindows()'''
+        cv2.destroyAllWindows()
         
         wordSeg(imag)
+        
     #last row
+    prevPath = pathList[size-2]
+    mini = prevPath[len(prevPath) - 2]
+    maxi = r
+    
+    imag = []  
+    for j in range(maxi-mini+1):                               
+        il = []         
+        for k in range (c):            
+            il.append(0)      
+        imag.append(il) 
+        
+    for j in prevPath[:-2]:
+        for k in range(mini,diction[j][0]+1):
+            imag[k-mini][diction[j][1]] = 255
+            
+    for j in range (maxi-mini+1):                                
+        for k in range (c):     
+            if imag[j][k]==0:
+                imag[j][k]=IM[j+mini][k] 
+    
+    imag = np.array(imag,dtype=np.uint8)
+    cv2.imshow('image',imag)
+    cv2.waitKey(0)  
+    cv2.destroyAllWindows()
+    
+    wordSeg(imag)
+            
 
 def bfs(IM, start, x1, x2, r, c):
     x = diction[start][0]
