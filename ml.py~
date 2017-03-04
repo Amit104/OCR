@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+=======
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Jan 17 15:41:37 2017
+
+@author: Axle
+"""
+
+>>>>>>> ecf45f5b0d77b24107919538ec618b06ee9b0ade
 from initialisations import *
 from denoise import *
 from lineSegment import *
@@ -6,7 +16,7 @@ def showImg(th2):
     cv2.imshow('image',th2)
     cv2.waitKey(0)  
     cv2.destroyAllWindows()
-
+<<<<<<< HEAD
 
 def movingaverage(interval, window_size):
    res = []
@@ -25,6 +35,28 @@ def movingaverage(interval, window_size):
        sum = sum / (window_size + window_size + 1)
        res.append(sum)
    for i in range(sz - window_size, sz):
+       res.append(interval[i])
+   return res
+
+def movingaverage1(start, end, interval, window_size):
+   res = []
+   sz = end - start + 1
+   window_size = int(window_size / 2.0)
+   for i in range(start):
+       res.append(0)
+   for i in range(start, start + window_size):
+       res.append(interval[i])
+   for i in range(start + window_size, sz - window_size + start):
+       lsum = rsum = 0
+       sum = interval[i]
+       for j in range(i - window_size, i):
+           lsum = lsum + interval[j]
+       for j in range(i + 1, i + 1 + window_size):
+           rsum = rsum + interval[j]
+       sum = sum + lsum + rsum
+       sum = sum / (window_size + window_size + 1)
+       res.append(sum)
+   for i in range(sz - window_size + start, sz + start):
        res.append(interval[i])
    return res
 
@@ -76,8 +108,10 @@ def getWindowSize(interval):
 
     
 img = cv2.imread('/home/subbu/Desktop/OCR-master/hh2.jpg', 0)
-
-
+=======
+    
+img = cv2.imread('D:/Study/ML/OCR/hh2.jpg',0)
+>>>>>>> ecf45f5b0d77b24107919538ec618b06ee9b0ade
 cv2.namedWindow('image', cv2.WINDOW_NORMAL)
 ret2,th2 = cv2.threshold(img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 r = th2.shape[0]
@@ -85,12 +119,18 @@ c = th2.shape[1]
 avg = []
 for i in range(r):
     rowsum = 0
+<<<<<<< HEAD
     f = 0
+=======
+    f= 0
+>>>>>>> ecf45f5b0d77b24107919538ec618b06ee9b0ade
     for j in range(c):
         if th2[i][j] == 0:
             rowsum = rowsum + 1
             f = 1
     avg.append(rowsum)
+<<<<<<< HEAD
+# f = interp1d(range(r), avg)
 
 
 winSize = getWindowSize(avg)
@@ -112,4 +152,13 @@ mxpoints = getBreakPoints(mavg)
 
 
 LineSeg(th2,r,c,mxpoints,15)
+=======
+f = interp1d(range(r), avg)
+plt.plot(range(r), avg,'o', range(r), f(range(r)), '-',)
+plt.show()
 
+brkpts = [11,30,50,70,90,109,129,150,168,188,208,226]
+brkpts2 = [115,357,532,677,834,1022,1221,1385,1590,1827,2056,2219,2389,2570,2782]
+brkpts3 = [105,285,446,671]
+LineSeg(th2,r,c,brkpts2,15)
+>>>>>>> ecf45f5b0d77b24107919538ec618b06ee9b0ade

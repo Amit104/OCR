@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+=======
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jan 21 19:17:25 2017
+
+@author: Axle
+"""
+
+>>>>>>> ecf45f5b0d77b24107919538ec618b06ee9b0ade
 from initialisations import *
 from wordsegment import *
 
