@@ -1,4 +1,13 @@
+<<<<<<< HEAD
+=======
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jan 25 19:38:56 2017
 
+@author: Axle
+"""
+
+>>>>>>> ecf45f5b0d77b24107919538ec618b06ee9b0ade
 from initialisations import *
 def wordSeg(IM):
     r = IM.shape[0]
